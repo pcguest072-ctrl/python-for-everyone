@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Zero to Hero - Learn Python from Scratch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.95);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        nav button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        nav button.active {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+        }
+
+        .content {
+            display: none;
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson {
+            margin-bottom: 30px;
+        }
+
+        .lesson h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .code-editor {
+            background: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .code-input {
+            width: 100%;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border: none;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 100px;
+            outline: none;
+        }
+
+        .run-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            min-height: 60px;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .tip {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .exercise {
+            background: #e8f5e8;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .quiz {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .quiz-option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .quiz-option.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            nav ul { flex-direction: column; align-items: center; }
+            .content { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐍 Python Zero to Hero</h1>
+            <p class="subtitle">Learn Python from absolute scratch - Interactive & Hands-on!</p>
+        </header>
+
+        <nav>
+            <ul id="nav-tabs">
+                <li><button data-lesson="welcome" class="active">🚀 Welcome</button></li>
+                <li><button data-lesson="variables">📦 Variables</button></li>
+                <li><button data-lesson="data-types">🔤 Data Types</button></li>
+                <li><button data-lesson="operators">➕ Operators</button></li>
+                <li><button data-lesson="conditionals">❓ If/Else</button></li>
+                <li><button data-lesson="loops">🔄 Loops</button></li>
+                <li><button data-lesson="functions">⚙️ Functions</button></li>
+                <li><button data-lesson="quiz">🧠 Quiz Time!</button></li>
+            </ul>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </nav>
+
+        <div id="content-container">
+            <!-- Welcome Section -->
+            <div id="welcome" class="content active">
+                <div class="lesson">
+                    <h2>🎉 Welcome to Python!</h2>
+                    <div class="explanation">
+                        <p><strong>Python is awesome because:</strong></p>
+                        <ul>
+                            <li>Easy to read and write</li>
+                            <li>Used by Google, NASA, Netflix</li>
+                            <li>Perfect for beginners</li>
+                            <li>Great for web, data, AI, games</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip">
+                        <strong>💡 How this works:</strong>
+                        <p>1. Read the lesson<br>
+                        2. Try the code examples<br>
+                        3. Click "Run" to see results<br>
+                        4. Complete exercises<br>
+                        5. Move to next lesson!</p>
+                    </div>
+
+                    <div class="code-editor">
+                        <button class="run-btn" onclick="runCode()">▶️ Run Code</button>
+                        <textarea class="code-input" id="welcome-code">print("Hello, Python World!")
+print("I can do this!")</textarea>
+                        <div class="output" id="welcome-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variables -->
+            <div id="variables" class="content">
+                <div class="lesson">
+                    <h2>📦 Variables - Storing Data</h2>
+                    <div class="explanation">
+                        <p>Variables are like <strong>boxes</strong> that hold data:</p>
+                        <pre><code>name = "Alice"
+age = 25
+height = 5.6</code></pre>
+                    </div>
+
+                    <div class="code-editor">
+                        <button class="run-btn" onclick="runCode('variables')">▶️ Run Code</button>
+                        <textarea class="code-input" id="variables-code">name = "Your Name"
+age = 20
+print("Hi", name)
+print("You are", age, "years old")</textarea>
+                        <div class="output" id="variables-output">Click Run to see your variables!</div>
+                    </div>
+
+                    <div class="exercise">
+                        <h3>✨ Try it!</h3>
+                        <p>Change the <code>name</code> and <code>age</code> to your info and run it!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Types -->
+            <div id="data-types" class="content">
+                <div class="lesson">
+                    <h2>🔤 Data Types</h2>
+                    <div class="explanation">
+                        <p>Python has 4 main types:</p>
+                        <ul>
+                            <li><code>str</code> - Text: <code>"hello"</code></li>
+                            <li><code>int</code> - Whole numbers: <code>42</code></li>
+                            <li><code>float</code> - Decimals: <code>3.14</code></li>
+                            <li><code>bool</code> - True/False: <code>True</code></li>
+                        </ul>
+                    </div>
+
+                    <div class="code-editor">
+                        <button class="run-btn" onclick="runCode('data-types')">▶️ Run Code</button>
+                        <textarea class="code-input" id="data-types-code">name = "Python"          # string
+age = 30                    # integer
+pi = 3.14159               # float
+is_fun = True              # boolean
+
+print(type(name))
+print(type(age))
+print(type(pi))
+print(type(is_fun))</textarea>
+                        <div class="output" id="data-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operators -->
+            <div id="operators" class="content">
+                <div class="lesson">
+                    <h2>➕ Operators - Math & Logic</h2>
+                    <div class="explanation">
+                        <p>Math: <code>+ - * / % **</code><br>
+                        Compare: <code>== != > < >= <=</code></p>
+                    </div>
+
+                    <div class="code-editor">
+                        <button class="run-btn" onclick="runCode('operators')">▶️ Run Code</button>
+                        <textarea class="code-input" id="operators-code">a = 10
+b = 3
+
+print("Add:", a + b)
+print("Subtract:", a - b)
+print("Multiply:", a * b)
+print("Divide:", a / b)
+print("Remainder:", a % b)
+print("Power:", a ** b)
+print("Equal?", a == b)</textarea>
+                        <div class="output" id="operators-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conditionals -->
+            <div id="conditionals" class="content">
+                <div class="lesson">
+                    <h2>❓ If/Else - Making Decisions</h2>
+                    <div class="explanation">
+                        <p>Control flow with conditions:</p>
+                        <pre><code>if condition:
+    do something
+else:
+    do something else</code></pre>
+                    </div>
+
+                    <div class="code-editor">
+                        <button class="run-btn" onclick="runCode('conditionals')">▶️ Run Code</button>
+                        <textarea class="code-input" id="conditionals-code">age = 18
+
+if age >= 18:
+    print("You can vote!")
+else:
+    print("Too young to vote!")</textarea>
+                        <div class="output" id="conditionals-output"></div>
+                    </div>
+
+                    <div class="exercise">
+                        <p>Try changing <code>age</code> to test both cases!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loops -->
+            <div id="loops" class="content">
+                <div class="lesson">
+                    <h2>🔄 Loops - Repeat Actions</h2>
+                    <div class="explanation">
+                        <p><code>for</code> - known number of times:<br>
+                        <code>while</code> - until condition is false</p>
+                    </div>
+
+                    <div class="code-editor">
+                        <button class="run-btn" onclick="runCode('loops')">▶️ Run Code</button>
+                        <textarea class="code-input" id="loops-code"># For loop
+for i in range(5):
+    print("Count:", i)
+
+print("\n# While loop")
+count = 0
+while count < 3:
+    print("Count:", count)
+    count += 1</textarea>
+                        <div class="output" id="loops-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Functions -->
+            <div id="functions" class="content">
+                <div class="lesson">
+                    <h2>⚙️ Functions - Reusable Code</h2>
+                    <div class="explanation">
+                        <p>Define once, use many times:</p>
+                        <pre><code>def function_name(parameters):
+    # code here
+    return result</code></pre>
+                    </div>
+
+                    <div class="code-editor">
+                        <button class="run-btn" onclick="runCode('functions')">▶️ Run Code</button>
+                        <textarea class="code-input" id="functions-code">def greet(name):
+    return f"Hello, {name}!"
+
+def add(a, b):
+    return a + b
+
+print(greet("World"))
+print("5 + 3 =", add(5, 3))</textarea>
+                        <div class="output" id="functions-output"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz -->
+            <div id="quiz" class="content">
+                <div class="lesson">
+                    <h2>🧠 Test Your Knowledge!</h2>
+                    <div class="quiz" id="quiz-container">
+                        <div class="quiz-question" id="quiz-question"></div>
+                        <div class="quiz-options" id="quiz-options"></div>
+                        <button id="next-question" style="display:none; margin-top:20px; padding:12px 24px; background:#667eea; color:white; border:none; border-radius:25px; cursor:pointer;">Next Question</button>
+                        <div id="quiz-score" style="margin-top:20px; font-size:1.2em; font-weight:bold;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLesson = 'welcome';
+        let quizProgress = 0;
+        let quizScore = 0;
+        let quizQuestions = [
+            {
+                question: "What does this print?\n```python\nprint('Hi ' + 'World')\n```",
+                options: ["Hi World", "HiWorld", "Hi + World", "Error"],
+                correct: 0
+            },
+            {
+                question: "Which is a string?\n```python\nx = '42'\n```",
+                options: ["int", "float", "str", "bool"],
+                correct: 2
+            },
+            {
+                question: "What is 10 % 3?",
+                options: ["3", "1", "0", "13"],
+                correct: 1
+            },
+            {
+                question: "```python\nage = 17\nif age >= 18:\n    print('Adult')\n``` prints?",
+                options: ["Adult", "Nothing", "Error", "17"],
+                correct: 1
+            },
+            {
+                question: "Functions use what keyword?",
+                options: ["function", "fun", "def", "func"],
+                correct: 2
+            }
+        ];
+
+        // Navigation
+        document.querySelectorAll('nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchLesson(btn.dataset.lesson);
+            });
+        });
+
+        function switchLesson(lessonId) {
+            // Hide all content
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(lessonId).classList.add('active');
+            document.querySelector(`[data-lesson="${lessonId}"]`).classList.add('active');
+            
+            currentLesson = lessonId;
+            updateProgress();
+            
+            if (lessonId === 'quiz') {
+                startQuiz();
+            }
+        }
+
+        function updateProgress() {
+            const lessons = ['welcome', 'variables', 'data-types', 'operators', 'conditionals', 'loops', 'functions'];
+            const progress = (lessons.indexOf(currentLesson) + 1) / lessons.length * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Code Runner (simplified Python interpreter)
+        function runCode(lessonId = null) {
+            const codeId = lessonId ? `${lessonId}-code` : `${currentLesson}-code`;
+            const outputId = lessonId ? `${lessonId}-output` : `${currentLesson}-output`;
+            const code = document.getElementById(codeId).value;
+            const output = document.getElementById(outputId);
+            
+            try {
+                // Simple Python parser for basics
+                let result = '';
+                
+                // Handle print statements
+                const printMatches = code.match(/print\$(.*?)\$/g);
+                if (printMatches) {
+                    printMatches.forEach(printStmt => {
+                        let args = printStmt.match(/print\$(.*?)\$/)[1];
+                        // Handle simple string concatenation
+                        if (args.includes(' + ')) {
+                            const parts = args.split(' + ');
+                            result += parts.map(part => 
+                                part.trim().replace(/['"]/g, '')
+                            ).join(' ') + '\n';
+                        } else {
+                            result += args.replace(/['"]/g, '') + '\n';
+                        }
+                    });
+                }
+                
+                // Handle basic calculations
+                const calcMatches = code.match(/(\d+(?:\.\d+)?)\s*([+\-*/%**])\s*(\d+(?:\.\d+)?)/g);
+                if (calcMatches) {
+                    calcMatches.forEach(calc => {
+                        const parts = calc.split(/([+\-*/%**])/);
+                        let num1 = parseFloat(parts[0]);
+                        let op = parts[1];
+                        let num2 = parseFloat(parts[2]);
+                        
+                        let res;
+                        switch(op) {
+                            case '+': res = num1 + num2; break;
+                            case '-': res = num1 - num2; break;
+                            case '*': res = num1 * num2; break;
+                            case '/': res = num1 / num2; break;
+                            case '%': res = num1 % num2; break;
+                            case '**': res = num1 ** num2; break;
+                        }
+                        result += `${calc} = ${res}\n`;
+                    });
+                }
+                
+                output.textContent = result || 'Code executed successfully! 🎉';
+                output.style.color = '#28a745';
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+                output.style.color = '#dc3545';
+            }
+        }
+
+        // Quiz functionality
+        function startQuiz() {
+            quizProgress = 0;
+            quizScore = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (quizProgress >= quizQuestions.length) {
+                showQuizResults();
+                return;
+            }
+            
+            const q = quizQuestions[quizProgress];
+            document.getElementById('quiz-question').textContent = q.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.textContent = option;
+                div.onclick = () => selectAnswer(index, q.correct);
+                optionsContainer.appendChild(div);
+            });
+            
+            document.getElementById('next-question').style.display = 'none';
+        }
+
+        function selectAnswer(selected, correct) {
+            document.querySelectorAll('.quiz-option').forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+            
+            if (selected === correct) {
+                quizScore++;
+            }
+            
+            document.getElementById('next-question').style.display = 'block';
+            document.getElementById('next-question').onclick = () => {
+                quizProgress++;
+                showQuestion();
+            };
+        }
+
+        function showQuizResults() {
+            document.getElementById('quiz-question').innerHTML = `
+                <h3>🎉 Quiz Complete!</h3>
+                <p>Your score: ${quizScore}/${quizQuestions.length} (${Math.round(quizScore/quizQuestions.length*100)}%)</p>
+            `;
+            document.getElementById('quiz-options').innerHTML = '';
+            document.getElementById('next-question').style.display = 'none';
+            
+            const scoreDiv = document.getElementById('quiz-score');
+            scoreDiv.textContent = `Final Score: ${quizScore}/${quizQuestions.length}`;
+            scoreDiv.style.color = quizScore >= 4 ? '#28a745' : quizScore >= 3 ? '#ffc107' : '#dc3545';
+        }
+
+        // Auto-run first example
+        window.onload = () => {
+            runCode('welcome');
+            updateProgress();
+        };
+    </script>
+</body>
+</html>
